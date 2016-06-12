@@ -32,7 +32,10 @@ module.exports = (text, attributes, filePath) ->
 
   try
     stdStream.hook()
-    html = Asciidoctor.$convert text, options
+    # html = Asciidoctor.$convert text, options
+    doc = Asciidoctor.$load text, options
+    html = doc.$convert()
+    console.log doc.references.$$smap.includes.hash.$$keys
     stdStream.restore()
     emit 'asciidoctor-render:success', html: html
   catch error
